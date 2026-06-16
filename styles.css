@@ -1950,7 +1950,7 @@ dialog::backdrop {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(2, 8, 30, 0.94), rgba(3, 35, 120, 0.58)),
-    url("assets/super-symbol/super-symbol-frame22.png") top center / cover;
+    url("assets/super-symbol/super-symbol-frame22-part1.webp") top center / cover;
 }
 
 .mayday-detail-hero {
@@ -1966,7 +1966,7 @@ dialog::backdrop {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(58, 12, 6, 0.94), rgba(226, 82, 34, 0.5)),
-    url("assets/golden-spatula/golden-spatula-cover.png") center / cover;
+    url("assets/golden-spatula/golden-spatula-cover-deploy.webp") center / cover;
 }
 
 .mayday-detail-hero::after {
@@ -2791,6 +2791,17 @@ dd {
 @media (max-width: 640px) {
   html {
     scroll-padding-top: 210px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+  }
+
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
   }
 
   .site-nav {
@@ -2872,16 +2883,29 @@ dd {
 
   .work-reel {
     bottom: 20px;
+    overflow: hidden;
     padding-top: 20px;
   }
 
   .reel-track {
+    left: 0;
     gap: 14px;
+    width: 100%;
+    padding: 0 18px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    transform: none;
+    scrollbar-width: none;
+  }
+
+  .reel-track::-webkit-scrollbar {
+    display: none;
   }
 
   .reel-card {
     width: clamp(118px, 35vw, 150px);
     border-radius: 18px;
+    scroll-snap-align: start;
   }
 
   .section {
@@ -2908,11 +2932,14 @@ dd {
   }
 
   .project-grid {
-    gap: 14px;
+    gap: 12px;
     margin-right: 0;
-    padding: 8px 0 74px;
+    padding: 8px 0 48px;
     scroll-padding-left: 0;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     touch-action: pan-x pan-y;
+    -webkit-overflow-scrolling: touch;
   }
 
   .project-card,
@@ -2920,6 +2947,9 @@ dd {
   #marketing .project-card-complete {
     flex-basis: 100%;
     min-width: 100%;
+    max-width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .project-card {
@@ -2945,15 +2975,13 @@ dd {
   }
 
   .gallery-control {
-    grid-template-columns: minmax(86px, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 10px;
-    bottom: 12px;
+    bottom: 10px;
   }
 
-  .gallery-button {
-    width: 44px;
-    height: 42px;
-    font-size: 18px;
+  .gallery-nav {
+    display: none;
   }
 
   .gallery-index {
@@ -2964,13 +2992,14 @@ dd {
 
   .detail-main {
     width: min(calc(100% - 32px), var(--max));
-    padding-top: 222px;
+    padding-top: 154px;
     padding-bottom: 64px;
   }
 
   .detail-hero {
-    gap: 12px;
-    padding: 24px 22px 26px;
+    min-height: auto;
+    gap: 10px;
+    padding: 20px 20px 22px;
     border-radius: 8px;
   }
 
@@ -2980,13 +3009,13 @@ dd {
   }
 
   .detail-hero .section-kicker {
-    margin-top: 22px;
-    font-size: 18px;
+    margin-top: 18px;
+    font-size: 16px;
   }
 
   .detail-hero h1 {
-    font-size: clamp(54px, 17vw, 76px);
-    line-height: 1.02;
+    font-size: clamp(46px, 14vw, 64px);
+    line-height: 1.04;
   }
 
   .nowrap-detail-title span {
@@ -2994,21 +3023,22 @@ dd {
   }
 
   .detail-hero > p:last-of-type {
-    font-size: 18px;
-    line-height: 1.62;
+    font-size: 16px;
+    line-height: 1.58;
   }
 
   .detail-stat-row {
-    gap: 12px;
+    gap: 10px;
   }
 
   .detail-stat-row span {
-    min-height: 132px;
-    padding: 20px;
+    min-height: 92px;
+    padding: 16px;
   }
 
   .detail-stat-row strong {
-    font-size: 38px;
+    margin-bottom: 8px;
+    font-size: 30px;
   }
 
   .nike-section-head {

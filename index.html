@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lin Helong Portfolio</title>
-    <link rel="stylesheet" href="styles.css?v=20260616-mobile-fix-1" />
+    <link rel="stylesheet" href="styles.css?v=20260616-mobile-fix-2" />
   </head>
   <body>
     <div class="opening-curtain" aria-hidden="true">
@@ -38,7 +38,10 @@
 
     <main>
       <section class="hero" id="home">
-        <video class="hero-video" src="assets/hero-video-jimeng-pingpong-web.mp4?v=20260616-mobile-1" autoplay muted loop playsinline preload="metadata"></video>
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+          <source media="(max-width: 640px)" src="assets/hero-video-jimeng-pingpong-web.mp4?v=20260616-mobile-1" />
+          <source src="assets/hero-video-jimeng-pingpong.mp4?v=20260613-2" />
+        </video>
         <div class="hero-shade" aria-hidden="true"></div>
         <div class="hero-inner">
           <p class="eyebrow reveal">Visual Designer / AI Designer / Brand Designer</p>
@@ -318,7 +321,7 @@
 
     <script src="assets/vendor/gsap.min.js?v=20260613-1"></script>
     <script src="assets/vendor/ScrollTrigger.min.js?v=20260613-1"></script>
-    <script src="script.js?v=20260616-scroll-anchor-fix-1"></script>
+    <script src="script.js?v=20260616-mobile-fix-2"></script>
   </body>
 </html>
 

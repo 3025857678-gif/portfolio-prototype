@@ -225,10 +225,27 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
   const previousButton = shell?.querySelector(".gallery-button-prev");
   const nextButton = shell?.querySelector(".gallery-button-next");
   const cards = Array.from(grid.querySelectorAll(".project-card"));
+  const mobileGalleryQuery = window.matchMedia("(max-width: 640px)");
+  let snapTimer = 0;
 
   totalIndex.textContent = String(Math.max(cards.length, 1)).padStart(2, "0");
 
   const maxScroll = () => Math.max(0, grid.scrollWidth - grid.clientWidth);
+  const nearestCardLeft = () => {
+    const closest = cards.reduce(
+      (match, card) => {
+        const distance = Math.abs(card.offsetLeft - grid.scrollLeft);
+        return distance < match.distance ? { distance, left: card.offsetLeft } : match;
+      },
+      { distance: Infinity, left: 0 }
+    );
+    return Math.max(0, Math.min(maxScroll(), closest.left));
+  };
+
+  const snapToNearestCard = (behavior = "smooth") => {
+    if (!mobileGalleryQuery.matches || !cards.length) return;
+    grid.scrollTo({ left: nearestCardLeft(), behavior });
+  };
 
   const updateControls = () => {
     const max = maxScroll();
@@ -278,6 +295,19 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
 
   const scrollByPage = (direction) => {
     stopMomentum();
+    if (mobileGalleryQuery.matches) {
+      const currentIndex = cards.reduce(
+        (match, card, index) => {
+          const distance = Math.abs(card.offsetLeft - grid.scrollLeft);
+          return distance < match.distance ? { distance, index } : match;
+        },
+        { distance: Infinity, index: 0 }
+      ).index;
+      const nextIndex = Math.max(0, Math.min(cards.length - 1, currentIndex + direction));
+      grid.scrollTo({ left: cards[nextIndex]?.offsetLeft || 0, behavior: "smooth" });
+      window.setTimeout(updateControls, 420);
+      return;
+    }
     grid.scrollBy({
       left: direction * Math.max(grid.clientWidth * 0.86, 320),
       behavior: "smooth"
@@ -287,6 +317,7 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
 
   grid.addEventListener("pointerdown", (event) => {
     if (event.button !== 0) return;
+    if (mobileGalleryQuery.matches || event.pointerType === "touch") return;
     stopMomentum();
     isDragging = true;
     didDrag = false;
@@ -330,6 +361,8 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
     }
     if (didDrag && Math.abs(velocity) > 0.6) {
       momentumFrame = requestAnimationFrame(animateMomentum);
+    } else {
+      snapToNearestCard();
     }
     if (didDrag) {
       grid.dataset.suppressClickUntil = String(performance.now() + 220);
@@ -343,7 +376,12 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
 
   previousButton?.addEventListener("click", () => scrollByPage(-1));
   nextButton?.addEventListener("click", () => scrollByPage(1));
-  grid.addEventListener("scroll", updateControls, { passive: true });
+  grid.addEventListener("scroll", () => {
+    updateControls();
+    if (!mobileGalleryQuery.matches) return;
+    window.clearTimeout(snapTimer);
+    snapTimer = window.setTimeout(() => snapToNearestCard(), 120);
+  }, { passive: true });
   window.addEventListener("resize", updateControls);
   grid.addEventListener("pointerup", stopDragging);
   grid.addEventListener("pointercancel", stopDragging);
