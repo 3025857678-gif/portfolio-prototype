@@ -394,7 +394,8 @@ document.querySelectorAll(".project-grid").forEach((grid) => {
 
 const reelTrack = document.querySelector(".reel-track");
 const reel = document.querySelector(".work-reel");
-if (reel && reelTrack) {
+const canHoverReel = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+if (reel && reelTrack && canHoverReel) {
   const updateReelOffset = (event) => {
     const bounds = reel.getBoundingClientRect();
     const progress = (event.clientX - bounds.left) / bounds.width;

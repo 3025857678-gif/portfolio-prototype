@@ -1790,7 +1790,7 @@ dialog::backdrop {
   overflow: hidden;
   isolation: isolate;
   border-style: solid;
-  background: rgba(7, 8, 6, 0.3);
+  background: rgba(7, 8, 6, 0.16);
 }
 
 .city-card img {
@@ -1800,17 +1800,11 @@ dialog::backdrop {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.88) contrast(1.05) brightness(0.66);
+  filter: none;
 }
 
 .city-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(180deg, rgba(7, 8, 6, 0.14), rgba(7, 8, 6, 0.5) 48%, rgba(7, 8, 6, 0.9)),
-    radial-gradient(circle at 20% 16%, rgba(31, 100, 255, 0.32), transparent 44%);
+  content: none;
 }
 
 .city-card span,
@@ -1819,13 +1813,14 @@ dialog::backdrop {
 }
 
 .city-card span {
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.78);
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.72), 0 1px 2px rgba(0, 0, 0, 0.88);
 }
 
 .city-card small {
   margin-top: 14px;
-  color: rgba(246, 244, 236, 0.82);
+  color: rgba(246, 244, 236, 0.92);
   font-weight: 800;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.72), 0 1px 2px rgba(0, 0, 0, 0.88);
 }
 
 .resume-body h2 {
@@ -2857,7 +2852,7 @@ dd {
     width: min(calc(100% - 36px), var(--max));
     min-height: 100svh;
     padding-top: clamp(138px, 18vh, 176px);
-    padding-bottom: 230px;
+    padding-bottom: 178px;
   }
 
   .eyebrow {
@@ -2893,18 +2888,21 @@ dd {
   }
 
   .work-reel {
-    bottom: 20px;
+    bottom: 24px;
     overflow: hidden;
-    padding-top: 20px;
+    padding: 16px 0 8px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
   }
 
   .reel-track {
     left: 0;
-    gap: 14px;
+    gap: 10px;
     width: 100%;
-    padding: 0 18px;
+    padding: 0 14px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
+    scroll-padding-inline: 14px;
     transform: none;
     scrollbar-width: none;
   }
@@ -2914,8 +2912,9 @@ dd {
   }
 
   .reel-card {
-    width: clamp(118px, 35vw, 150px);
-    border-radius: 18px;
+    width: clamp(92px, 29vw, 112px);
+    border-radius: 16px;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.36);
     scroll-snap-align: start;
   }
 
